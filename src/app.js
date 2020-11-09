@@ -6,6 +6,7 @@ class App {
     this.context = this.canvas.getContext("2d");
     document.body.appendChild(this.canvas);
     window.addEventListener("resize", this.resize.bind(this));
+    window.addEventListener("click", this.onTouch.bind(this));
 
     this.chat = new Chat();
     this.resize();
@@ -36,6 +37,11 @@ class App {
     this.chat.draw(this.context);
 
     requestAnimationFrame(this.animate.bind(this));
+  }
+
+  onTouch(e) {
+    const isMyChat = e.clientX >= this.width / 2;
+    this.chat.addHeartBalloon(isMyChat);
   }
 }
 
