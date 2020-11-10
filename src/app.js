@@ -6,7 +6,10 @@ class App {
     this.context = this.canvas.getContext("2d");
     document.body.appendChild(this.canvas);
     window.addEventListener("resize", this.resize.bind(this));
-    window.addEventListener("click", this.onTouch.bind(this));
+
+    const clickEvent =
+      "ontouchstart" in document.documentElement ? "touchstart" : "click";
+    this.canvas.addEventListener("click", this.onTouch.bind(this));
 
     this.chat = new Chat();
     this.resize();
