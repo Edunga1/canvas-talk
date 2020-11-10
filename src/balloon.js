@@ -3,6 +3,8 @@ import Unit from "./unit.js";
 export default class Balloon extends Unit {
   constructor() {
     super();
+    this.animationTime = 40;
+
     this.isMyChat = false;
     this.rowSize = 30;
     this.columnSize = 30;
@@ -24,6 +26,7 @@ export default class Balloon extends Unit {
   }
 
   update() {
+    super.update();
     this.width = this.columnSize * this.columns + this.paddingSize * 2;
     this.height = this.rowSize * this.rows + this.paddingSize * 2;
     this.fullWidth = this.width + this.marginSize;
@@ -33,9 +36,12 @@ export default class Balloon extends Unit {
       : this.marginSize;
     this.ex = this.sx + this.fullWidth;
     this.ey = this.sy + this.fullHeight;
+
+    if (!this.isAnimationDone && this.order > 1) this.clearAnimation();
   }
 
   draw(ctx) {
+    this.sy = this.sy + this.fullHeight * (1 - this.animationProgress);
     ctx.fillStyle = "#FFF";
     this.roundedRect(
       ctx,
